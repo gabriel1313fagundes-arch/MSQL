@@ -1,0 +1,113 @@
+1atv- criar bancos de dados 
+nome:Rota_Velho_Chico
+
+2atv:criar as tebelas 
+
+create database clientes;
+
+use clientes; 
+
+1-tabela clientes
+create table clientes(
+id_clientes int,
+nome_cliente varchar(100)not null,
+telefone varchar(20)not null,
+email varchar(100)not null,
+cidade_origem varchar(60) not null,
+primary key (id_clientes)
+
+);
+ 2 tabela cidade
+
+create table id_cidade(
+id_cidade int,
+cidade_origem varchar(60) not null,
+primary key (id_cidade)
+);
+
+3-tabela passeios
+
+
+create table passeios(
+id_ passeio int,
+nome_passeio varchar(100)not null,
+local varchar(100)not null,
+discricao varchar(200)not null,
+valor decimal(10,2)not null,
+duracao_hora int,
+primary key (id_ passeio)
+
+);
+
+
+4-tabela guias
+
+create table guias(
+id_guia int,
+nome_guia varchar(100)not null,
+telefone varchar(20)not null,
+idioma varchar(50) not null,
+especialidade varchar(80) not null,
+primary key (id_guia)
+
+);
+
+5-tabela reservas
+
+ create table reservas(
+	id_reserva int primary key
+auto_increment,
+	id_clientes int,
+    id_passeio int,
+    id_guia int,
+    data_reserva date,
+    quantidade_pessoa int,
+    valor_total decimal(10,2),
+	status varchar (30) not null,
+    
+    
+    foreign key (id_clientes) references clientes(id_clientes),
+    foreign key (id_passeio) references passeios(id_passeio),    
+    foreign key (id_guia) references guias(id_guia)
+);
+
+
+
+6- tabela pagamentos
+
+create table pagamentos(
+	id_pagamento int primary key 
+    auto_increment,
+	id_reserva int not null,
+    forma_pagamento varchar (40),
+    valor_pagemnto decimal (10,2),
+    data_pagamento date,
+    status_pagamento varchar(30),
+    foreign key (id_reserva) references reservas (id_reserva)
+);
+    
+
+
+    
+
+ 
+3-inserir as informações
+
+
+1-8 clientes de diferentes city
+
+
+insert into clientes (id_clientes,nome_cliente,telefone,email,cidade_origem) 
+values
+	
+    
+    
+    ('1','murilo prof''(87)988-4513-1269','murilolol123@gmail.com', 'petrolina'),
+    ('1','yuri','(87)988-3266-6947','yurimartins0800@gmail.com', 'juazeiro'),
+    ('1','davis silva','()988-3169-0486','davis157@gmail.com', 'salvador'),
+    ('1','gabriel','(11)988-4722-6666','bielzin@gmail.com', 'sao paulo'),
+    ('gabriel' , 'são paulo'),
+    ('wedvania' , 'fortaleza'),
+    ('samuel' , 'caruaru'),
+    ('pedro' , 'olinda'),
+    ('carlos' , 'narnia');
