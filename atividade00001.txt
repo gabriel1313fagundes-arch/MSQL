@@ -102,12 +102,74 @@ values
 	
     
     
-    ('1','murilo prof''(87)988-4513-1269','murilolol123@gmail.com', 'petrolina'),
-    ('1','yuri','(87)988-3266-6947','yurimartins0800@gmail.com', 'juazeiro'),
-    ('1','davis silva','()988-3169-0486','davis157@gmail.com', 'salvador'),
-    ('1','gabriel','(11)988-4722-6666','bielzin@gmail.com', 'sao paulo'),
-    ('gabriel' , 'são paulo'),
-    ('wedvania' , 'fortaleza'),
-    ('samuel' , 'caruaru'),
-    ('pedro' , 'olinda'),
-    ('carlos' , 'narnia');
+  ('1','murilo prof','(87)988-4513-1269','murilolol123@gmail.com','petrolina'),
+  ('1','yuri','(87)988-3266-6947','yurimartins0800@gmail.com','juazeiro'),
+  ('1','davis silva','(75)988-3169-0486','davis157@gmail.com','salvador'),
+  ('1','gabriel','(11)88-4722-6666','bielzin@gmail.com','sao paulo'),
+  ('1','wedvania','(44)-88-4206-9645', 'mirella123@gmail.com','fortaleza'),
+  ('1','samuel','(32)88-8548-0022','samu0800@gmail.com','caruaru'),
+  ('1','pedro' ,'(88)88-9545-2200','pedri001@gmail.com','olinda'),
+  ('1','carlos','(45)88-0201-2290','carlin2222@gamil.com','narnia')
+);
+
+8-2 passeios 
+
+INSERT INTO passeios
+(id_passeio, nome_passeio, local, descricao, valor, duracao_hora)
+VALUES
+  (1, 'Passeio de Barco', 'Petrolina', 'Passeio de barco pelo Rio São Francisco', 80.00, 2),
+
+  (2, 'Visita a Vinícola', 'Petrolina', 'Visita guiada com degustação de vinhos',120.00, 3),
+
+  (3, 'Ilha do Rodeadouro', 'Juazeiro', 'Dia de lazer e banho nas águas do rio', 50.00, 5),
+
+  (4, 'City Tour', 'Salvador', 'Conheça os principais pontos turísticos da cidade', 150.00, 4),
+
+  (5, 'Passeio de Buggy', 'Fortaleza', 'Aventura pelas dunas e praias de Fortaleza', 200.00, 3),
+
+  (6, 'Praia de Porto de Galinhas', 'Olinda', 'Excursão para conhecer as piscinas naturais', 180.00, 6);
+
+3-INSERT INTO reservas
+(id_clientes, id_passeio, id_guia, data_reserva, quantidade_pessoa, valor_total, status)
+VALUES
+
+(1, 1, 1, '2026-11-20', 2, 160.00, 'Confirmada'),
+
+(2, 2, 2, '2026-11-21', 3, 360.00, 'Pendente'),
+
+(3, 3, 3, '2026-11-22', 2, 100.00, 'Confirmada'),
+
+(4, 4, 4, '2026-11-23', 4, 600.00, 'Cancelada'),
+
+(5, 5, 5, '2026-11-24', 2, 400.00, 'Confirmada'),
+
+(6, 6, 6, '2026-11-25', 3, 540.00, 'Pendente'),
+
+(7, 1, 1, '2026-11-26', 5, 400.00, 'Confirmada'),
+
+(8, 3, 3, '2026-11-27', 4, 200.00, 'Pendente');
+
+
+
+
+4INSERT INTO reservas
+(id_clientes, id_passeio, id_guia, data_reserva, quantidade_pessoa, valor_total, status)
+VALUES
+
+(1, 1, 1, '2026-11-20', 2, 160.00, 'Confirmada'),
+
+(2, 2, 2, '2026-11-21', 3, 360.00, 'Pendente'),
+
+(3, 3, 3, '2026-11-22', 2, 100.00, 'Confirmada'),
+
+(4, 4, 4, '2026-11-23', 4, 600.00, 'Cancelada'),
+
+(5, 5, 5, '2026-11-24', 2, 400.00, 'Confirmada'),
+
+(6, 6, 6, '2026-11-25', 3, 540.00, 'Pendente'),
+
+(7, 1, 1, '2026-11-26', 5, 400.00, 'Confirmada'),
+
+(8, 3, 3, '2026-11-27', 4, 200.00, 'Pendente');
+
+
