@@ -1,0 +1,21 @@
+
+import sqlite3
+
+banco = sqlite3.connect('primeiro_banco.db')
+
+cursor = banco.cursor()
+
+#cursor.execute("CREATE TABLE aluno(nome text,idade integer,email text)")
+
+#cursor.execute("INSERT INTO aluno VALUES ('murilo', 20,'murilo112@gmail.com')")
+
+#banco.commit()
+
+
+cursor.execute("SELECT * FROM aluno")
+
+print(cursor.fetchall())
+
+cursor.execute("DELETE from aluno WHERE idade = 20")
+
+banco.commit()
