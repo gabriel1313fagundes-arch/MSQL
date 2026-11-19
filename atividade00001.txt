@@ -304,84 +304,76 @@ finally:
 
 
 
-
 import sqlite3
 
-# Abre o banco de dados. Se o arquivo ainda não existir, o SQLite cria.
-banco = sqlite3.connect("petshop.db")
-cursor = banco.cursor()
+banco = None
 
-# Cria a tabela. O id é automático e o nome é obrigatório.
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS pets (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        especie TEXT,
-        tutor TEXT,
-        idade INTEGER
-    )
-""")
+try:
+    # Abre o banco e cria o cursor para executar os comandos SQL.
+    banco = sqlite3.connect("petshop.db")
+    cursor = banco.cursor()
 
-# 1. CREATE - Cadastra os cinco pets na primeira execução.
-cursor.execute("SELECT COUNT(*) FROM pets")
-quantidade = cursor.fetchone()[0]
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            especie TEXT,
+            tutor TEXT,
+            idade INTEGER
+        )
+    """)
 
-if quantidade == 0:
-    pets = [
-        ("Rex", "cachorro", "João", 4),
-        ("Luna", "gato", "Ana", 2),
-        ("Pipoca", "coelho", "Pedro", 1),
-        ("Mel", "cachorro", "Bia", 3),
-        ("Louro", "papagaio", "Lucas", 6)
-    ]
+    # 1. CREATE - Cadastra cinco pets se a tabela estiver vazia.
+    cursor.execute("SELECT COUNT(*) FROM pets")
+    quantidade = cursor.fetchone()[0]
 
-    cursor.executemany("""
-        INSERT INTO pets (nome, especie, tutor, idade)
-        VALUES (?, ?, ?, ?)
-    """, pets)
-    banco.commit()  # Salva os cadastros.
-    print("5 pets cadastrados!")
+    if quantidade == 0:
+        pets = [
+            ("Rex", "cachorro", "João", 4),
+            ("Luna", "gato", "Ana", 2),
+            ("Pipoca", "coelho", "Pedro", 1),
+            ("Mel", "cachorro", "Bia", 3),
+            ("Louro", "papagaio", "Lucas", 6)
+        ]
 
-# 2. READ - Lista todos os pets e depois apenas os cachorros.
-print("\nTodos os pets:")
-cursor.execute("SELECT id, nome, especie, tutor, idade FROM pets ORDER BY id")
+        cursor.executemany("""
+            INSERT INTO pets (nome, especie, tutor, idade)
+            VALUES (?, ?, ?, ?)
+        """, pets)
 
-for id_pet, nome, especie, tutor, idade in cursor.fetchall():
-    print(f"{id_pet} - {nome} | {especie} | Tutor: {tutor} | Idade: {idade} ano(s)")
+    # 2. READ - Mostra todos os pets e depois apenas os cachorros.
+    print("\nTodos os pets:")
+    cursor.execute("SELECT id, nome, especie, tutor, idade FROM pets ORDER BY id")
 
-print("\nApenas os cachorros:")
-cursor.execute("SELECT nome FROM pets WHERE especie = ? ORDER BY id", ("cachorro",))
+    for id_pet, nome, especie, tutor, idade in cursor.fetchall():
+        print(f"{id_pet} - {nome} | {especie} | Tutor: {tutor} | Idade: {idade}")
 
-for linha in cursor.fetchall():
-    print(linha[0])
+    print("\nApenas os cachorros:")
+    cursor.execute("SELECT nome FROM pets WHERE especie = ? ORDER BY id", ("cachorro",))
 
-# 3. UPDATE - Troca a tutora da Luna de Ana para Carla.
-cursor.execute("""
-    UPDATE pets SET tutor = ?
-    WHERE nome = ? AND especie = ? AND tutor = ?
-""", ("Carla", "Luna", "gato", "Ana"))
+    for nome, in cursor.fetchall():
+        print(nome)
 
-if cursor.rowcount > 0:
-    print("\nCarla agora é a tutora da Luna.")
+    # 3. UPDATE - Altera a tutora da Luna de Ana para Carla.
+    cursor.execute("""
+        UPDATE pets SET tutor = ?
+        WHERE nome = ? AND especie = ? AND tutor = ?
+    """, ("Carla", "Luna", "gato", "Ana"))
 
-# 4. DELETE - Exclui o coelho Pipoca, que não é mais atendido.
-cursor.execute("""
-    DELETE FROM pets
-    WHERE nome = ? AND especie = ? AND tutor = ?
-""", ("Pipoca", "coelho", "Pedro"))
+    # 4. DELETE - Exclui o coelho Pipoca, do tutor Pedro.
+    cursor.execute("""
+        DELETE FROM pets
+        WHERE nome = ? AND especie = ? AND tutor = ?
+    """, ("Pipoca", "coelho", "Pedro"))
 
-if cursor.rowcount > 0:
-    print("Pipoca foi excluído do cadastro.")
+    banco.commit()  # Salva os cadastros, a atualização e a exclusão.
 
-banco.commit()  # Salva a troca de tutor e a exclusão.
+    # 5. EXTRA - Mostra somente o nome e o tutor de cada pet restante.
+    print("\nNome do pet | Tutor")
+    cursor.execute("SELECT nome, tutor FROM pets ORDER BY id")
 
-# 5. EXTRA - Mostra somente o nome e o tutor dos pets restantes.
-print("\nNome do pet | Tutor")
-cursor.execute("SELECT nome, tutor FROM pets ORDER BY id")
-
-for nome, tutor in cursor.fetchall():
-    print(f"{nome} | {tutor}")
-
+    for nome, tutor in cursor.fetchall():
+        print(f"{nome} | {tutor}")
 
 except sqlite3.Error as erro:
     print("Erro no banco de dados:", erro)
