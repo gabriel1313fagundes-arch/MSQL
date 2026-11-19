@@ -1,4 +1,4 @@
-1atv- criar bancos de dados 
+se1atv- criar bancos de dados 
 nome:Rota_Velho_Chico
 
 2atv:criar as tebelas 
@@ -382,4 +382,11 @@ cursor.execute("SELECT nome, tutor FROM pets ORDER BY id")
 for nome, tutor in cursor.fetchall():
     print(f"{nome} | {tutor}")
 
-banco.close()
+
+except sqlite3.Error as erro:
+    print("Erro no banco de dados:", erro)
+
+finally:
+    # Fecha a conexão mesmo se algum comando der erro.
+    if banco is not None:
+        banco.close()
